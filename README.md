@@ -199,10 +199,36 @@ inventory-metrics-sre/
 └── README.md
 
 📸 11. Evidencia del Proyecto
+<img width="921" height="623" alt="image" src="https://github.com/user-attachments/assets/06a483a7-7d72-4d4f-aec0-4ccb321bac8b" />
 
-Guarda capturas en:
+<img width="921" height="900" alt="image" src="https://github.com/user-attachments/assets/5c12531f-4224-4afc-be25-2d02bc2a8c9e" />
 
-docs/img/
+<img width="921" height="205" alt="image" src="https://github.com/user-attachments/assets/51049df2-c05b-4abb-aacc-6eb08617f7af" />
+
+<img width="921" height="174" alt="image" src="https://github.com/user-attachments/assets/ece35e05-7beb-4406-874e-b97c901a14bb" />
+
+<img width="921" height="888" alt="image" src="https://github.com/user-attachments/assets/5fbc259a-4e56-409f-973b-da3c56394d5d" />
+
+<img width="921" height="191" alt="image" src="https://github.com/user-attachments/assets/bfd30315-e9e2-4b44-b7e1-b3eaf5fae01b" />
+
+<img width="921" height="505" alt="image" src="https://github.com/user-attachments/assets/de0ea6e2-92fb-4a12-bcd3-97d9e8bf759f" />
+
+<img width="921" height="991" alt="image" src="https://github.com/user-attachments/assets/60025f73-fba6-4d3e-9ba6-19424d72a207" />
+
+<img width="921" height="549" alt="image" src="https://github.com/user-attachments/assets/542e50af-b56f-4a6b-bff7-874f73c844da" />
+
+<img width="921" height="250" alt="image" src="https://github.com/user-attachments/assets/2d0bd507-779d-4702-9014-cf13b0efe767" />
+
+
+
+
+
+
+
+
+
+
+
 
 
 Se recomienda incluir:
@@ -223,5 +249,6 @@ Proyecto Final — SRE Bootcamp
 📜 13. Licencia
 
 MIT License — ver archivo LICENSE.
+
 
 
