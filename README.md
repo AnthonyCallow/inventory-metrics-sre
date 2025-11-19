@@ -220,35 +220,14 @@ inventory-metrics-sre/
 <img width="921" height="250" alt="image" src="https://github.com/user-attachments/assets/2d0bd507-779d-4702-9014-cf13b0efe767" />
 
 
-
-
-
-
-
-
-
-
-
-
-
-Se recomienda incluir:
-
-Pods en Kubernetes
-
-Targets en Prometheus
-
-Dashboard en Grafana
-
-Alertmanager activo
-
 👤 12. Autor
 
 Anthony Richard Callow Monge
-Proyecto Final — SRE Bootcamp
+Correo: anthony.callow@outlook.com
 
-📜 13. Licencia
 
-MIT License — ver archivo LICENSE.
+
+
 
 
 
