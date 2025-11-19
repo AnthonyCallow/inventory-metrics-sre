@@ -1,0 +1,238 @@
+---
+- name: Bootstrap herramientas e implementar Inventory Metrics API en Minikube
+  hosts: local
+  vars:
+    project_dir: "{{ lookup('env', 'HOME') }}/inventory-metrics-sre"
+    image_name: "inventory-metrics-api:latest"
+    kubectl_version: "v1.34.0"
+    minikube_version: "v1.37.0"
+    helm_version: "v3.15.2"
+  tasks:
+
+    #######################################################################
+    # 1. Verificar Docker (no se instala, solo se valida que exista)
+    #######################################################################
+    - name: Verificar que Docker está disponible
+      ansible.builtin.command:
+        cmd: docker version --format '{{"{{.Server.Version}}"}}'
+      register: docker_check
+      changed_when: false
+      failed_when: docker_check.rc != 0
+      tags: tools
+
+    #######################################################################
+    # 2. Instalar paquetes base en Ubuntu (curl, ca-certificates, etc.)
+    #######################################################################
+    - name: Actualizar índice de paquetes APT
+      ansible.builtin.apt:
+        update_cache: yes
+      become: true
+      tags: tools
+
+    - name: Instalar paquetes base requeridos
+      ansible.builtin.apt:
+        name:
+          - curl
+          - wget
+          - ca-certificates
+          - conntrack
+        state: present
+      become: true
+      tags: tools
+
+    #######################################################################
+    # 3. Instalar / actualizar kubectl
+    #######################################################################
+    - name: Verificar si kubectl está instalado
+      ansible.builtin.command:
+        cmd: kubectl version --client --output=json
+      register: kubectl_check
+      ignore_errors: true
+      changed_when: false
+      tags: tools
+
+    - name: Instalar / actualizar kubectl
+      ansible.builtin.get_url:
+        url: "https://dl.k8s.io/release/{{ kubectl_version }}/bin/linux/amd64/kubectl"
+        dest: /usr/local/bin/kubectl
+        mode: '0755'
+      become: true
+      when: kubectl_check.rc != 0
+      tags: tools
+
+    #######################################################################
+    # 4. Instalar / actualizar minikube
+    #######################################################################
+    - name: Verificar si minikube está instalado
+      ansible.builtin.command:
+        cmd: minikube version
+      register: minikube_check
+      ignore_errors: true
+      changed_when: false
+      tags: tools
+
+    - name: Instalar / actualizar minikube
+      ansible.builtin.get_url:
+        url: "https://storage.googleapis.com/minikube/releases/{{ minikube_version }}/minikube-linux-amd64"
+        dest: /usr/local/bin/minikube
+        mode: '0755'
+      become: true
+      when: minikube_check.rc != 0
+      tags: tools
+
+    #######################################################################
+    # 5. Instalar / actualizar Helm
+    #######################################################################
+    - name: Verificar si helm está instalado
+      ansible.builtin.command:
+        cmd: helm version --short
+      register: helm_check
+      ignore_errors: true
+      changed_when: false
+      tags: tools
+
+    - name: Descargar Helm tarball
+      ansible.builtin.get_url:
+        url: "https://get.helm.sh/helm-{{ helm_version }}-linux-amd64.tar.gz"
+        dest: "/tmp/helm-{{ helm_version }}-linux-amd64.tar.gz"
+      when: helm_check.rc != 0
+      tags: tools
+
+    - name: Extraer y mover binario de helm
+      ansible.builtin.unarchive:
+        src: "/tmp/helm-{{ helm_version }}-linux-amd64.tar.gz"
+        dest: /tmp
+        remote_src: true
+      when: helm_check.rc != 0
+      tags: tools
+
+    - name: Instalar binario de helm en /usr/local/bin
+      ansible.builtin.command:
+        cmd: mv /tmp/linux-amd64/helm /usr/local/bin/helm
+      become: true
+      when: helm_check.rc != 0
+      tags: tools
+
+    - name: Asegurar permisos de helm
+      ansible.builtin.file:
+        path: /usr/local/bin/helm
+        mode: '0755'
+      become: true
+      when: helm_check.rc != 0
+      tags: tools
+
+    #######################################################################
+    # 6. Asegurar que Minikube está corriendo
+    #######################################################################
+    - name: Verificar estado de Minikube
+      ansible.builtin.command:
+        cmd: minikube status
+      register: minikube_status
+      ignore_errors: true
+      changed_when: false
+      tags: cluster
+
+    - name: Iniciar Minikube si no está corriendo
+      ansible.builtin.command:
+        cmd: minikube start --driver=docker
+      when:
+        - minikube_status.rc != 0
+        - "'host: Running' not in minikube_status.stdout"
+      tags: cluster
+
+
+    #######################################################################
+    # 7. Build imagen Docker y cargarla en Minikube
+    #######################################################################
+    - name: Construir imagen Docker de la aplicación
+      ansible.builtin.command:
+        cmd: docker build -t {{ image_name }} .
+      args:
+        chdir: "{{ project_dir }}"
+      tags: build
+
+    - name: Cargar imagen en Minikube
+      ansible.builtin.command:
+        cmd: minikube image load {{ image_name }}
+      args:
+        chdir: "{{ project_dir }}"
+      tags: image
+
+    #######################################################################
+    # 8. Aplicar manifiestos de Kubernetes (namespace, deployment, service)
+    #######################################################################
+    - name: Crear / actualizar namespace inventory-monitoring
+      ansible.builtin.command:
+        cmd: kubectl apply -f k8s/namespace.yaml
+      args:
+        chdir: "{{ project_dir }}"
+      tags: k8s
+
+    - name: Aplicar Deployment de la app
+      ansible.builtin.command:
+        cmd: kubectl apply -f k8s/deployment.yaml
+      args:
+        chdir: "{{ project_dir }}"
+      tags: k8s
+
+    - name: Aplicar Service de la app
+      ansible.builtin.command:
+        cmd: kubectl apply -f k8s/service.yaml
+      args:
+        chdir: "{{ project_dir }}"
+      tags: k8s
+
+    #######################################################################
+    # 9. Instalar / actualizar kube-prometheus-stack con Helm
+    #######################################################################
+    - name: Agregar repo de Helm prometheus-community (si no existe)
+      ansible.builtin.command:
+        cmd: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+      register: helm_add_repo
+      failed_when: false
+      changed_when: "'has been added to your repositories' in helm_add_repo.stdout"
+      tags: monitoring
+
+    - name: Actualizar repos de Helm
+      ansible.builtin.command:
+        cmd: helm repo update
+      tags: monitoring
+
+    - name: Instalar / actualizar kube-prometheus-stack
+      ansible.builtin.command: >
+        helm upgrade --install prometheus-stack prometheus-community/kube-prometheus-stack
+        --namespace monitoring --create-namespace
+        --set prometheus.prometheusSpec.serviceMonitorSelectorNilUsesPods=false
+      tags: monitoring
+
+    #######################################################################
+    # 10. Aplicar ServiceMonitor y reglas de alerta
+    #######################################################################
+    - name: Aplicar ServiceMonitor de la app
+      ansible.builtin.command:
+        cmd: kubectl apply -f k8s/servicemonitor.yaml
+      args:
+        chdir: "{{ project_dir }}"
+      tags: k8s
+
+    - name: Aplicar reglas de alerta de la app
+      ansible.builtin.command:
+        cmd: kubectl apply -f k8s/alert-rules.yaml
+      args:
+        chdir: "{{ project_dir }}"
+      tags: k8s
+
+    #######################################################################
+    # 11. Información final
+    #######################################################################
+    - name: Mostrar pods en inventory-monitoring
+      ansible.builtin.command:
+        cmd: kubectl get pods -n inventory-monitoring
+      changed_when: false
+      tags: info
+
+    - name: Mostrar pods en monitoring
+      ansible.builtin.command:
+        cmd: kubectl get pods -n monitoring
+      changed_when: false
+      tags: info

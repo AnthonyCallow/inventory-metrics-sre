@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: inventory-api-rules
+  namespace: monitoring
+  labels:
+    release: prometheus-stack
+spec:
+  groups:
+    - name: inventory-api-alerts
+      rules:
+        - alert: InventoryAPIHighErrorRate
+          expr: sum(rate(inventory_http_requests_total{http_status="500"}[5m])) > 0
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Errores 500 detectados en Inventory API"
+            description: "Se han detectado errores 500 en la API durante los últimos 5 minutos."

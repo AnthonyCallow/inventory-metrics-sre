@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-api
+  namespace: inventory-monitoring
+  labels:
+    app: inventory-api
+spec:
+  type: ClusterIP
+  selector:
+    app: inventory-api
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
