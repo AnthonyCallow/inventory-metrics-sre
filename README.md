@@ -1,22 +1,16 @@
-📦 Inventory Metrics API — Proyecto Final SRE Bootcamp
+#  Inventory Metrics API — Proyecto Final SRE Bootcamp
 
 Este proyecto implementa un sistema completo de observabilidad, métricas, alertas y automatización, utilizando:
 
-Python + Flask
+- Python + Flask
+- Docker
+- Kubernetes (Minikube)
+- Prometheus (via kube-prometheus-stack)
+- Grafana
+- Alertmanager
+- Automatización completa con Ansible
 
-Docker
-
-Kubernetes (Minikube)
-
-Prometheus (via kube-prometheus-stack)
-
-Grafana
-
-Alertmanager
-
-Automatización completa con Ansible
-
-📘 1. Descripción del Proyecto
+##  1. Descripción del Proyecto
 
 La Inventory Metrics API es una aplicación sencilla escrita en Flask que expone endpoints básicos y métricas personalizadas compatibles con Prometheus.
 
@@ -37,7 +31,7 @@ Histogramas y contadores de latencia
 
 Métricas por método HTTP, endpoint y status code
 
-🧩 2. Arquitectura
+##  2. Arquitectura
                 ┌────────────────────┐
                 │ Inventory API      │
                 │  Flask + Metrics   │
@@ -61,33 +55,32 @@ Métricas por método HTTP, endpoint y status code
               │     Alertmanager       │
               └─────────────────────────┘
 
-⚙️ 3. Requisitos Previos
+##  3. Requisitos Previos
 
 Solo es obligatorio:
 
-Docker Desktop instalado en Windows con soporte WSL2
+- Docker Desktop instalado en Windows con soporte WSL2
+- Todo lo demás (kubectl, helm, minikube, dependencias apt) será instalado automáticamente por Ansible.
 
-Todo lo demás (kubectl, helm, minikube, dependencias apt) será instalado automáticamente por Ansible.
-
-🤖 4. Automatización con Ansible
+# 4. Automatización con Ansible
 
 El proyecto incluye un playbook que:
 
-✔ Instala herramientas necesarias
-✔ Inicia Minikube
-✔ Construye imagen Docker
-✔ Carga imagen en Minikube
-✔ Aplica manifiestos Kubernetes
-✔ Instala kube-prometheus-stack
-✔ Aplica ServiceMonitor y alertas
-✔ Muestra estado final del cluster
+- Instala herramientas necesarias
+- Inicia Minikube
+- Construye imagen Docker
+- Carga imagen en Minikube
+- Aplica manifiestos Kubernetes
+- Instala kube-prometheus-stack
+- Aplica ServiceMonitor y alertas
+- Muestra estado final del cluster
 
-Estructura:
+## Estructura:
 ansible/
  ├─ inventory.ini
  └─ deploy.yml
 
-🚀 5. Despliegue Automático
+#  5. Despliegue Automático
 
 Ejecuta en WSL2:
 
@@ -100,18 +93,18 @@ Si todo funciona correctamente, verás:
 PLAY RECAP
 localhost : ok=21   changed=11   failed=0
 
-🐍 6. Build Manual (Opcional)
+#  6. Build Manual (Opcional)
 docker build -t inventory-metrics-api:latest .
 minikube image load inventory-metrics-api:latest
 
-☸️ 7. Despliegue Manual (Opcional)
+#  7. Despliegue Manual (Opcional)
 kubectl apply -f k8s/namespace.yaml
 kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
 kubectl apply -f k8s/servicemonitor.yaml
 kubectl apply -f k8s/alert-rules.yaml
 
-📡 8. Acceso a los Servicios
+#  8. Acceso a los Servicios
 🔹 8.1 API
 kubectl port-forward -n inventory-monitoring svc/inventory-api 8000:8000
 
@@ -157,7 +150,7 @@ kubectl port-forward -n monitoring svc/prometheus-stack-kube-prom-alertmanager 9
 
 👉 http://localhost:9093
 
-🧪 9. Pruebas de Alertas
+#  9. Pruebas de Alertas
 
 Generar errores 500:
 
@@ -170,7 +163,7 @@ Prometheus → Alerts
 
 Alertmanager → muestra alerta activa
 
-📁 10. Estructura del Proyecto
+#  10. Estructura del Proyecto
 inventory-metrics-sre/
 ├── ansible/
 │   ├── deploy.yml
@@ -198,7 +191,7 @@ inventory-metrics-sre/
 ├── .gitignore
 └── README.md
 
-📸 11. Evidencia del Proyecto
+#  11. Evidencia del Proyecto
 <img width="921" height="623" alt="image" src="https://github.com/user-attachments/assets/06a483a7-7d72-4d4f-aec0-4ccb321bac8b" />
 
 <img width="921" height="900" alt="image" src="https://github.com/user-attachments/assets/5c12531f-4224-4afc-be25-2d02bc2a8c9e" />
@@ -220,10 +213,11 @@ inventory-metrics-sre/
 <img width="921" height="250" alt="image" src="https://github.com/user-attachments/assets/2d0bd507-779d-4702-9014-cf13b0efe767" />
 
 
-👤 12. Autor
+#  12. Autor
 
 Anthony Richard Callow Monge
 Correo: anthony.callow@outlook.com
+
 
 
 
