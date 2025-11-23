@@ -1,4 +1,4 @@
-#  Inventory Metrics API — Proyecto Final SRE Bootcamp
+# Proyecto Final SRE Bootcamp
 
 Este proyecto implementa un sistema completo de observabilidad, métricas, alertas y automatización, utilizando:
 
@@ -57,7 +57,7 @@ Métricas por método HTTP, endpoint y status code
 
 ##  3. Requisitos Previos
 
-Solo es obligatorio:
+Antes de ejecutar el proyucto eses obligatorio tener:
 
 - Docker Desktop instalado en Windows con soporte WSL2
 - Todo lo demás (kubectl, helm, minikube, dependencias apt) será instalado automáticamente por Ansible.
@@ -217,6 +217,7 @@ inventory-metrics-sre/
 
 Anthony Richard Callow Monge
 Correo: anthony.callow@outlook.com
+
 
 
 
