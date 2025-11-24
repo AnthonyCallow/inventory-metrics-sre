@@ -22,9 +22,9 @@ Este proyecto implementa un sistema completo de observabilidad, métricas, alert
 - [Build y despliegue manual](#6-build-y-despliegue-manual)
 - [Acceder a los servicios](#7-acceder-a-los-servicios)
   - [API](#api)
-  - [Prometheus](prometheus)
-  - [Grafana](grafana)
-  - [Alertmanager](alertmanager)
+  - [Prometheus](#prometheus)
+  - [Grafana](#grafana)
+  - [Alertmanager](#alertmanager)
 - [Pruebas de alertas](#9-pruebas-de-alertas)
 - [Evidencia del proyecto](#10-evidencia-del-proyecto)
 
@@ -260,6 +260,7 @@ Alertmanager → muestra alerta activa
 <img width="921" height="549" alt="image" src="https://github.com/user-attachments/assets/542e50af-b56f-4a6b-bff7-874f73c844da" />
 
 <img width="921" height="250" alt="image" src="https://github.com/user-attachments/assets/2d0bd507-779d-4702-9014-cf13b0efe767" />
+
 
 
 
