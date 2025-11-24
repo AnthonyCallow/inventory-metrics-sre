@@ -11,7 +11,7 @@ Este proyecto implementa un sistema completo de observabilidad, métricas, alert
 - Alertmanager
 - Automatización completa con Ansible
 
-##  1. Descripción del Proyecto
+##  1. Descripción
 
 La Inventory Metrics API es una aplicación sencilla escrita en Flask que expone endpoints básicos y métricas personalizadas compatibles con Prometheus.
 
@@ -49,7 +49,7 @@ La Inventory Metrics API es una aplicación sencilla escrita en Flask que expone
               │     Alertmanager       │
               └─────────────────────────┘
 
-## 3. Estructura del Proyecto
+## 3. Estructura
 ```bash
 inventory-metrics-sre/
 ├── ansible/
@@ -87,7 +87,7 @@ Antes de ejecutar el proyecto es obligatorio tener:
 - Docker Desktop instalado en Windows con soporte WSL2
 - Todo lo demás (kubectl, helm, minikube, dependencias apt) será instalado automáticamente por Ansible.
 
-## 5. Build y despliegue automático con Ansible
+## 5. Build y Despliegue automático con Ansible
 
 El proyecto incluye un playbook que:
 
@@ -100,7 +100,7 @@ El proyecto incluye un playbook que:
 - Aplica ServiceMonitor y alertas
 - Muestra estado final del cluster
 
-## Ubicación de los archivos:
+### Ubicación de los archivos:
 
 ```bash
 ansible/
@@ -109,9 +109,9 @@ ansible/
 ```
 
 
-## 6. Build y despliegue Automático
+### Pasos para ejecutar el playbook
 
-Ejecuta en WSL2:
+Ejecute en WSL2:
 
 ```bash
 cd ~/inventory-metrics-sre
@@ -119,8 +119,7 @@ ansible-playbook -i ansible/inventory.ini ansible/deploy.yml --ask-become-pass
 
 ```
 
-
-Si todo funciona correctamente, verás:
+Si todo funciona correctamente, se verá:
 
 ```bash
 PLAY RECAP
@@ -128,9 +127,9 @@ localhost : ok=21   changed=11   failed=0
 
 ```
 
-#  6. Build y despliegue Manual 
+##  6. Build y Despliegue Manual 
 
-En caso de que querer ejecutar el proyecto manualmente, ejecutar los siguientes comandos:
+En caso de que querer ejecutar el proyecto manualmente, ejecute los siguientes comandos:
 
 
 - Build: 
@@ -151,7 +150,7 @@ kubectl apply -f k8s/alert-rules.yaml
 
 ```
 
-#  7. Acceder a los Servicios
+##  7. Acceder a los Servicios
 
 Una vez desplegueda la aplicación se pueden acceder los siguientes servicios:
 
@@ -205,7 +204,7 @@ kubectl port-forward -n monitoring svc/prometheus-stack-kube-prom-alertmanager 9
 
 http://localhost:9093
 
-#  8. Pruebas de Alertas
+##  8. Pruebas de Alertas
 
 Generar errores 500:
 
@@ -223,7 +222,7 @@ Alertmanager → muestra alerta activa
 
 
 
-#  10. Evidencia del Proyecto
+##  10. Evidencia del Proyecto
 <img width="921" height="623" alt="image" src="https://github.com/user-attachments/assets/06a483a7-7d72-4d4f-aec0-4ccb321bac8b" />
 
 <img width="921" height="900" alt="image" src="https://github.com/user-attachments/assets/5c12531f-4224-4afc-be25-2d02bc2a8c9e" />
@@ -243,16 +242,3 @@ Alertmanager → muestra alerta activa
 <img width="921" height="549" alt="image" src="https://github.com/user-attachments/assets/542e50af-b56f-4a6b-bff7-874f73c844da" />
 
 <img width="921" height="250" alt="image" src="https://github.com/user-attachments/assets/2d0bd507-779d-4702-9014-cf13b0efe767" />
-
-
-
-
-
-
-
-
-
-
-
-
-
