@@ -238,6 +238,11 @@ Alertmanager → muestra alerta activa
 
 ##  10. Evidencias del Proyecto
 
+**Ejecutar el playbook de Ansible**
+<img width="956" height="1021" alt="image" src="https://github.com/user-attachments/assets/c31ba1b2-1683-40bf-a785-f7c8279d0fcf" />
+<img width="953" height="1021" alt="image" src="https://github.com/user-attachments/assets/179da33e-93a5-4721-a8d5-7a0f8846e825" />
+
+
 **Dashboard en Grafana:** Contiene gráfico para observar el total de requests acumulados, latencia P95 por endpoint, requests por endpoint y el error rate de la aplicación.
 <img width="921" height="623" alt="image" src="https://github.com/user-attachments/assets/06a483a7-7d72-4d4f-aec0-4ccb321bac8b" />
 
@@ -256,7 +261,6 @@ Alertmanager → muestra alerta activa
 **Servicio http://localhost:8000/items**
 <img width="953" height="552" alt="image" src="https://github.com/user-attachments/assets/2dfb84fe-6a6b-47c1-bc3d-823318bb365d" />
 
-
 **Servicio http://localhost:8000/fail**
 <img width="921" height="191" alt="image" src="https://github.com/user-attachments/assets/bfd30315-e9e2-4b44-b7e1-b3eaf5fae01b" />
 
@@ -271,6 +275,7 @@ Alertmanager → muestra alerta activa
 
 **Port forward a Alter Manager**
 <img width="921" height="250" alt="image" src="https://github.com/user-attachments/assets/2d0bd507-779d-4702-9014-cf13b0efe767" />
+
 
 
 
