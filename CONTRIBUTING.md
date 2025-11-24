@@ -11,7 +11,13 @@ Utilice la interfaz de GitHub para crear una copia del proyecto en su propio per
 Asigne un nombre descriptivo.  
 Ejemplos:
 
-`git checkout -b fix-servicemonitor-labels git checkout -b update-dashboard-metrics git checkout -b improve-ansible-playbook`
+```bash
+git checkout -b fix-servicemonitor-labels 
+git checkout -b update-dashboard-metrics 
+git checkout -b improve-ansible-playbook
+
+
+```
 
 ---
 
@@ -38,8 +44,15 @@ Por favor asegúrese de:
 
 Ejemplo:
 
-`git add . git commit -m "Fix: actualizar labels del ServiceMonitor" git push origin fix-servicemonitor-labels`
 
+
+```bash
+git add .
+git commit -m "Fix: actualizar labels del ServiceMonitor"
+git push origin fix-servicemonitor-labels`
+
+
+```
 ---
 
 ## 5. **Abra un Pull Request**
@@ -77,8 +90,14 @@ En su PR:
     
 - Si su cambio crea recursos persistentes, incluya una sección **Cleanup**.  
   Ejemplo:
+
+```bash
+  kubectl delete ns inventory-monitoring
+
+
+```
   
-  `kubectl delete ns inventory-monitoring`
+
   
 
 ---
@@ -97,3 +116,4 @@ Los PR serán evaluados considerando:
   
 
 Podrían solicitarse ajustes antes de aprobarse.
+
