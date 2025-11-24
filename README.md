@@ -236,7 +236,7 @@ Alertmanager → muestra alerta activa
 
 
 
-##  10. Evidencia del Proyecto
+##  10. Evidencias del Proyecto
 
 **Dashboard en Grafana:** Contiene gráfico para observar el total de requests acumulados, latencia P95 por endpoint, requests por endpoint y el error rate de la aplicación.
 <img width="921" height="623" alt="image" src="https://github.com/user-attachments/assets/06a483a7-7d72-4d4f-aec0-4ccb321bac8b" />
@@ -271,6 +271,7 @@ Alertmanager → muestra alerta activa
 
 **Port forward a Alter Manager**
 <img width="921" height="250" alt="image" src="https://github.com/user-attachments/assets/2d0bd507-779d-4702-9014-cf13b0efe767" />
+
 
 
 
