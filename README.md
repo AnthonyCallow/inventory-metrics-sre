@@ -11,6 +11,24 @@ Este proyecto implementa un sistema completo de observabilidad, métricas, alert
 - Alertmanager
 - Automatización completa con Ansible
 
+
+## Tabla de Contenido
+
+- [Descripción](#1-descripción)
+- [Arquitectura](#2-arquitectura)
+- [Estructura del proyecto](#3-estructura)
+- [Requisitos previos](#4-requisitos-previos)
+- [Build y despliegue automático con Ansible](#5-build-y-despliegue-automático-con-ansible)
+- [Build y despliegue manual](#6-build-y-despliegue-manual)
+- [Acceder a los servicios](#7-acceder-a-los-servicios)
+  - [API](-api)
+  - [Prometheus](-prometheus)
+  - [Grafana](-grafana)
+  - [Alertmanager](-alertmanager)
+- [Pruebas de alertas](#9-pruebas-de-alertas)
+- [Evidencia del proyecto](#10-evidencia-del-proyecto)
+
+
 ##  1. Descripción
 
 La Inventory Metrics API es una aplicación sencilla escrita en Flask que expone endpoints básicos y métricas personalizadas compatibles con Prometheus.
@@ -154,7 +172,7 @@ kubectl apply -f k8s/alert-rules.yaml
 
 Una vez desplegueda la aplicación se pueden acceder los siguientes servicios:
 
-**8.1 API**
+**- API**
 ```bash
 kubectl port-forward -n inventory-monitoring svc/inventory-api 8000:8000
 
@@ -165,14 +183,14 @@ kubectl port-forward -n inventory-monitoring svc/inventory-api 8000:8000
 - 	http://localhost:8000/fail
 -	 http://localhost:8000/metrics
 
-**7.2 Prometheus**
+**- Prometheus**
 ```bash
 kubectl port-forward -n monitoring svc/prometheus-stack-kube-prom-prometheus 9090:9090
 
 ```
 Visita: http://localhost:9090
 
-**7.3 Grafana**
+**- Grafana**
 ```bash
 kubectl port-forward -n monitoring svc/prometheus-stack-grafana 3000:80
 
@@ -195,7 +213,7 @@ monitoring/grafana-dashboard.json
 
 ```
 
-**7.4 Alertmanager**
+**- Alertmanager**
 ```bash
 kubectl port-forward -n monitoring svc/prometheus-stack-kube-prom-alertmanager 9093:9093
 
@@ -204,7 +222,7 @@ kubectl port-forward -n monitoring svc/prometheus-stack-kube-prom-alertmanager 9
 
 http://localhost:9093
 
-##  8. Pruebas de Alertas
+## 9. Pruebas de Alertas
 
 Generar errores 500:
 
@@ -242,3 +260,4 @@ Alertmanager → muestra alerta activa
 <img width="921" height="549" alt="image" src="https://github.com/user-attachments/assets/542e50af-b56f-4a6b-bff7-874f73c844da" />
 
 <img width="921" height="250" alt="image" src="https://github.com/user-attachments/assets/2d0bd507-779d-4702-9014-cf13b0efe767" />
+
