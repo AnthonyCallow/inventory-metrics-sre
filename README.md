@@ -22,7 +22,7 @@ Este proyecto implementa un sistema completo de observabilidad, métricas, alert
 - [Build y despliegue manual](#6-build-y-despliegue-manual)
 - [Acceder a los servicios](#7-acceder-a-los-servicios)
 - [Pruebas de alertas](#9-pruebas-de-alertas)
-- [Evidencia del proyecto](#10-evidencia-del-proyecto)
+- [Evidencias del proyecto](#10-evidencias-del-proyecto)
 
 
 ##  1. Descripción
@@ -275,6 +275,7 @@ Alertmanager → muestra alerta activa
 
 **Port forward a Alter Manager**
 <img width="921" height="250" alt="image" src="https://github.com/user-attachments/assets/2d0bd507-779d-4702-9014-cf13b0efe767" />
+
 
 
 
