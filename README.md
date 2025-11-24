@@ -250,23 +250,28 @@ Alertmanager → muestra alerta activa
 **Servicio http://localhost:8000/health**
 <img width="921" height="174" alt="image" src="https://github.com/user-attachments/assets/ece35e05-7beb-4406-874e-b97c901a14bb" />
 
-**Servicio http://localhost:8000/fail**
+**Servicio http://localhost:8000/metrics**
 <img width="921" height="888" alt="image" src="https://github.com/user-attachments/assets/5fbc259a-4e56-409f-973b-da3c56394d5d" />
 
 **Servicio http://localhost:8000/items**
 <img width="953" height="552" alt="image" src="https://github.com/user-attachments/assets/2dfb84fe-6a6b-47c1-bc3d-823318bb365d" />
 
 
-**Dashboard del Alert Manager**
+**Servicio http://localhost:8000/fail**
 <img width="921" height="191" alt="image" src="https://github.com/user-attachments/assets/bfd30315-e9e2-4b44-b7e1-b3eaf5fae01b" />
 
+**Dashboard del Alert Manager**
 <img width="921" height="505" alt="image" src="https://github.com/user-attachments/assets/de0ea6e2-92fb-4a12-bcd3-97d9e8bf759f" />
 
+**Despliegue de la aplicacion y port forward a Prometheus**
 <img width="921" height="991" alt="image" src="https://github.com/user-attachments/assets/60025f73-fba6-4d3e-9ba6-19424d72a207" />
 
+**Port forward a Grafana**
 <img width="921" height="549" alt="image" src="https://github.com/user-attachments/assets/542e50af-b56f-4a6b-bff7-874f73c844da" />
 
+**Port forward a Alter Manager**
 <img width="921" height="250" alt="image" src="https://github.com/user-attachments/assets/2d0bd507-779d-4702-9014-cf13b0efe767" />
+
 
 
 
