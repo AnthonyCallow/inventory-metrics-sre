@@ -1,7 +1,5 @@
 # Proyecto Final SRE Bootcamp
-**Autor:** Anthony Richard Callow Monge
-
-**Correo:** anthony.callow@outlook.com
+**Autor:** Anthony Richard Callow Monge / **Correo:** anthony.callow@outlook.com
 
 Este proyecto implementa un sistema completo de observabilidad, métricas, alertas y automatización, utilizando:
 
@@ -51,148 +49,7 @@ La Inventory Metrics API es una aplicación sencilla escrita en Flask que expone
               │     Alertmanager       │
               └─────────────────────────┘
 
-##  3. Requisitos Previos
-
-Antes de ejecutar el proyecto es obligatorio tener:
-
-- Docker Desktop instalado en Windows con soporte WSL2
-- Todo lo demás (kubectl, helm, minikube, dependencias apt) será instalado automáticamente por Ansible.
-
-# 4. Despliegue automático con Ansible
-
-El proyecto incluye un playbook que:
-
-- Instala herramientas necesarias
-- Inicia Minikube
-- Construye imagen Docker
-- Carga imagen en Minikube
-- Aplica manifiestos Kubernetes
-- Instala kube-prometheus-stack
-- Aplica ServiceMonitor y alertas
-- Muestra estado final del cluster
-
-## Ubicación de los archivos:
-
-ansible/
-
-├─ inventory.ini
-
-└─ deploy.yml
-
-
-## Despliegue Automático
-
-Ejecuta en WSL2:
-
-```bash
-cd ~/inventory-metrics-sre
-ansible-playbook -i ansible/inventory.ini ansible/deploy.yml --ask-become-pass
-
-```
-
-
-Si todo funciona correctamente, verás:
-
-```bash
-PLAY RECAP
-localhost : ok=21   changed=11   failed=0
-
-```
-
-#  5. Build y despliegue Manual 
-
-En caso de que querer ejecutar el proyecto manualmente, ejecutar los siguientes comandos:
-
-
-- Build: 
-```bash
-docker build -t inventory-metrics-api:latest .
-minikube image load inventory-metrics-api:latest
-
-
-```
-- Despliegue:
-```bash
-kubectl apply -f k8s/namespace.yaml
-kubectl apply -f k8s/deployment.yaml
-kubectl apply -f k8s/service.yaml
-kubectl apply -f k8s/servicemonitor.yaml
-kubectl apply -f k8s/alert-rules.yaml
-
-
-```
-
-#  8. Acceso a los Servicios
-
-Una vez desplegueda la aplicación se pueden acceder los siguientes servicios:
-
-**8.1 API**
-```bash
-kubectl port-forward -n inventory-monitoring svc/inventory-api 8000:8000
-
-```
-
--  	http://localhost:8000
--	 http://localhost:8000/items
-- 	http://localhost:8000/fail
--	 http://localhost:8000/metrics
-
-**8.2 Prometheus**
-```bash
-kubectl port-forward -n monitoring svc/prometheus-stack-kube-prom-prometheus 9090:9090
-
-```
-Visita: http://localhost:9090
-
-**8.3 Grafana**
-```bash
-kubectl port-forward -n monitoring svc/prometheus-stack-grafana 3000:80
-
-
-```
-Visita: http://localhost:3000
-
-Usuario: admin
-Contraseña:
-
-```bash
-kubectl get secret -n monitoring prometheus-stack-grafana \
-  -o jsonpath="{.data.admin-password}" | base64 --decode && echo
-```
-
-Importa el dashboard desde:
-
-```bash
-monitoring/grafana-dashboard.json
-
-```
-
-**8.4 Alertmanager**
-```bash
-kubectl port-forward -n monitoring svc/prometheus-stack-kube-prom-alertmanager 9093:9093
-
-
-```
-
-http://localhost:9093
-
-#  9. Pruebas de Alertas
-
-Generar errores 500:
-
-```bash
-for i in {1..30}; do curl -s http://localhost:8000/fail; done
-
-
-```
-
-Luego:
-
-Prometheus → Alerts
-
-Alertmanager → muestra alerta activa
-
-#  10. Estructura del Proyecto
+## 3. Estructura del Proyecto
 ```bash
 inventory-metrics-sre/
 ├── ansible/
@@ -222,7 +79,151 @@ inventory-metrics-sre/
 └── README.md
 ```
 
-#  11. Evidencia del Proyecto
+
+##  4. Requisitos Previos
+
+Antes de ejecutar el proyecto es obligatorio tener:
+
+- Docker Desktop instalado en Windows con soporte WSL2
+- Todo lo demás (kubectl, helm, minikube, dependencias apt) será instalado automáticamente por Ansible.
+
+## 5. Build y despliegue automático con Ansible
+
+El proyecto incluye un playbook que:
+
+- Instala herramientas necesarias
+- Inicia Minikube
+- Construye imagen Docker
+- Carga imagen en Minikube
+- Aplica manifiestos Kubernetes
+- Instala kube-prometheus-stack
+- Aplica ServiceMonitor y alertas
+- Muestra estado final del cluster
+
+## Ubicación de los archivos:
+
+```bash
+ansible/
+├─ inventory.ini
+└─ deploy.yml
+```
+
+
+## 6. Build y despliegue Automático
+
+Ejecuta en WSL2:
+
+```bash
+cd ~/inventory-metrics-sre
+ansible-playbook -i ansible/inventory.ini ansible/deploy.yml --ask-become-pass
+
+```
+
+
+Si todo funciona correctamente, verás:
+
+```bash
+PLAY RECAP
+localhost : ok=21   changed=11   failed=0
+
+```
+
+#  6. Build y despliegue Manual 
+
+En caso de que querer ejecutar el proyecto manualmente, ejecutar los siguientes comandos:
+
+
+- Build: 
+```bash
+docker build -t inventory-metrics-api:latest .
+minikube image load inventory-metrics-api:latest
+
+
+```
+- Despliegue:
+```bash
+kubectl apply -f k8s/namespace.yaml
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+kubectl apply -f k8s/servicemonitor.yaml
+kubectl apply -f k8s/alert-rules.yaml
+
+
+```
+
+#  7. Acceder a los Servicios
+
+Una vez desplegueda la aplicación se pueden acceder los siguientes servicios:
+
+**8.1 API**
+```bash
+kubectl port-forward -n inventory-monitoring svc/inventory-api 8000:8000
+
+```
+
+-  	http://localhost:8000
+-	 http://localhost:8000/items
+- 	http://localhost:8000/fail
+-	 http://localhost:8000/metrics
+
+**7.2 Prometheus**
+```bash
+kubectl port-forward -n monitoring svc/prometheus-stack-kube-prom-prometheus 9090:9090
+
+```
+Visita: http://localhost:9090
+
+**7.3 Grafana**
+```bash
+kubectl port-forward -n monitoring svc/prometheus-stack-grafana 3000:80
+
+
+```
+Visita: http://localhost:3000
+
+Usuario: admin
+Contraseña:
+
+```bash
+kubectl get secret -n monitoring prometheus-stack-grafana \
+  -o jsonpath="{.data.admin-password}" | base64 --decode && echo
+```
+
+Importa el dashboard desde:
+
+```bash
+monitoring/grafana-dashboard.json
+
+```
+
+**7.4 Alertmanager**
+```bash
+kubectl port-forward -n monitoring svc/prometheus-stack-kube-prom-alertmanager 9093:9093
+
+
+```
+
+http://localhost:9093
+
+#  8. Pruebas de Alertas
+
+Generar errores 500:
+
+```bash
+for i in {1..30}; do curl -s http://localhost:8000/fail; done
+
+
+```
+
+Luego:
+
+Prometheus → Alerts
+
+Alertmanager → muestra alerta activa
+
+
+
+#  10. Evidencia del Proyecto
 <img width="921" height="623" alt="image" src="https://github.com/user-attachments/assets/06a483a7-7d72-4d4f-aec0-4ccb321bac8b" />
 
 <img width="921" height="900" alt="image" src="https://github.com/user-attachments/assets/5c12531f-4224-4afc-be25-2d02bc2a8c9e" />
@@ -242,6 +243,7 @@ inventory-metrics-sre/
 <img width="921" height="549" alt="image" src="https://github.com/user-attachments/assets/542e50af-b56f-4a6b-bff7-874f73c844da" />
 
 <img width="921" height="250" alt="image" src="https://github.com/user-attachments/assets/2d0bd507-779d-4702-9014-cf13b0efe767" />
+
 
 
 
