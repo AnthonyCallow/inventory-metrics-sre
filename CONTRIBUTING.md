@@ -1,123 +1,99 @@
- **Guía de Contribución — Inventory Metrics API (SRE Bootcamp)**
+# Cómo Contribuir
 
-¡Gracias por tu interés en contribuir!  
-Este repositorio es parte del proceso de formación del **SRE Bootcamp**, y busca servir como recurso práctico para aprender sobre observabilidad, métricas, automatización y despliegue de aplicaciones en Kubernetes.  
-Tus aportes —ya sean ideas, correcciones o mejoras— pueden ayudar a otros estudiantes a aprender más efectivamente.
+## 1. **Realice un Fork del Repositorio**
 
----
-
-#  **Cómo Contribuir**
-
-## 1. **Haz un Fork del Repositorio**
-
-Utiliza la interfaz de GitHub para crear una copia del proyecto en tu propio perfil.
+Utilice la interfaz de GitHub para crear una copia del proyecto en su propio perfil.
 
 ---
 
-## 2. **Crea una Rama de Trabajo**
+## 2. **Cree una Rama de Trabajo**
 
-Usa un nombre descriptivo para tu rama.  
+Asigne un nombre descriptivo.  
 Ejemplos:
 
 `git checkout -b fix-servicemonitor-labels git checkout -b update-dashboard-metrics git checkout -b improve-ansible-playbook`
 
 ---
 
-## 3. **Realiza tus Cambios**
+## 3. **Realice Sus Cambios**
 
-Al hacer tus aportes, por favor:
+Por favor asegúrese de:
 
-- Sigue la estructura de carpetas existente (`app/`, `k8s/`, `ansible/`, etc.).
+- Mantener la estructura existente (`app/`, `k8s/`, `ansible/`, etc.).
   
-- Escribe documentación clara y comentarios de código cuando sea necesario.
+- Documentar y comentar el código cuando corresponda.
   
-- Mantén consistencia en formato, estilo y convenciones del proyecto.
+- Conservar el estilo y las convenciones establecidas.
   
-- Si tu cambio afecta Kubernetes, Ansible o métricas, **prueba el despliegue en Minikube** antes de enviar tu PR.
+- Probar despliegues en Minikube si su cambio afecta Kubernetes, Ansible o métricas.
   
-- Si realizas cambios en dashboards, asegúrate de que los paneles muestren datos reales.
+- Validar que los dashboards muestren datos reales.
   
-- No incluyas archivos generados automáticamente ni secretos.
+- No incluir archivos generados automáticamente ni información sensible.
   
 
 ---
 
-## 4. **Haz Commit y Push de tus Cambios**
+## 4. **Haga Commit y Push**
 
 Ejemplo:
 
-`git add . git commit -m "Fix: actualizar labels del ServiceMonitor para Prometheus Operator" git push origin fix-servicemonitor-labels`
+`git add . git commit -m "Fix: actualizar labels del ServiceMonitor" git push origin fix-servicemonitor-labels`
 
 ---
 
-## 5. **Abre un Pull Request (PR)**
+## 5. **Abra un Pull Request**
 
-En tu PR:
+En su PR:
 
-- Usa un título claro y profesional.
+- Use un título claro y profesional.
   
-- Escribe un resumen breve y directo explicando tu cambio.
+- Incluya un breve resumen de los cambios.
   
-- Si aplica, referencia issues relacionados.
+- Referencie issues si aplica.
   
-- Explica los pasos para reproducir el cambio (si afecta comportamiento).
+- Indique pasos de reproducción si modifica comportamiento.
   
-- Especifica si el PR afecta documentación, comportamiento, métricas o infraestructura.
+- Señale si el PR afecta documentación, métricas o infraestructura.
   
 
 ---
 
-#  **Guías y Buenas Prácticas**
+# **Guías y Buenas Prácticas**
 
-###  Escribir en español claro y profesional
-
-(inglés también es aceptado si el contexto lo requiere).
-
-###  Evitar emojis en documentación técnica
-
-(a menos que el contexto sea educativo o motivacional).
-
-###  Asegurar que los ejercicios sean reproducibles
-
-Evita dependencias externas no documentadas.
-
-###  Para Kubernetes y Ansible:
-
-- Mantén indentación de 2 espacios en YAML.
+- Escriba en español claro y profesional (inglés si el contexto lo requiere).
   
-- Usa nombres de recursos consistentes con el estándar del proyecto.
+- Evite emojis en documentación técnica.
   
-- No incluyas secretos ni credenciales.
+- Asegure que los ejercicios y despliegues sean reproducibles.
   
-
-###  Si tu cambio despliega recursos persistentes (pods, PVs, namespaces, etc.):
-
-Incluye una sección **“Cleanup”** indicando cómo eliminar los recursos.
-
-Ejemplo:
-
-`kubectl delete ns inventory-monitoring`
+- En Kubernetes y Ansible:
+  
+  - Utilice indentación de 2 espacios en YAML.
+    
+  - Mantenga nombres coherentes con el estándar del proyecto.
+    
+  - No incluya secretos ni credenciales.
+    
+- Si su cambio crea recursos persistentes, incluya una sección **Cleanup**.  
+  Ejemplo:
+  
+  `kubectl delete ns inventory-monitoring`
+  
 
 ---
 
-#  **Revisión de Pull Requests**
+# **Revisión de Pull Requests**
 
-Todos los PR serán revisados para garantizar:
+Los PR serán evaluados considerando:
 
 - Calidad técnica
   
-- Claridad en la documentación
+- Claridad y completitud de la documentación
   
-- Consistencia con el resto del proyecto
+- Consistencia con el proyecto
   
 - Buenas prácticas SRE y DevOps
   
 
-Se pueden solicitar cambios antes de hacer merge.
-
----
-
-#  **Gracias por Contribuir**
-
-Tu participación ayuda a mejorar este recurso educativo y fortalece el aprendizaje de otros estudiantes del SRE Bootcamp.  
-¡Gracias nuevamente por aportar al proyecto!
+Podrían solicitarse ajustes antes de aprobarse.
