@@ -5,9 +5,9 @@ from functools import wraps
 
 app = Flask(__name__)
 
-# ==========================
+
 #  MÉTRICAS PROMETHEUS
-# ==========================
+
 
 # Contador de todas las peticiones HTTP
 REQUEST_COUNT = Counter(
@@ -23,11 +23,13 @@ REQUEST_LATENCY = Histogram(
     ["endpoint"]
 )
 
-# Datos de ejemplo del inventario
+# Datos de del inventario
 ITEMS = [
-    {"id": 1, "name": "Laptop", "stock": 10},
-    {"id": 2, "name": "Teclado", "stock": 25},
-    {"id": 3, "name": "Mouse", "stock": 30},
+    {"id": 1, "name": "Absolute Batman", "stock": 5},
+    {"id": 2, "name": "Absolute Wonder Woman", "stock": 7},
+    {"id": 3, "name": "Absolute Absolute Superman", "stock": 4},
+    {"id": 4, "name": "Absolute Flash", "stock": 6},
+    {"id": 5, "name": "Absolute Green Lanter", "stock": 9},
 ]
 
 
@@ -44,22 +46,16 @@ def track_metrics(endpoint: str):
                 # Ejecuta la función de la ruta
                 response = func(*args, **kwargs)
 
-                # Flask puede devolver:
-                # - solo el objeto Response
-                # - (json, status_code)
-                # - (json, status_code, headers)
                 status_code = 200
                 if isinstance(response, tuple):
                     if len(response) >= 2:
                         status_code = response[1]
                 else:
-                    # Si no es tupla, asumimos 200
                     status_code = 200
 
                 return response
 
             except Exception:
-                # Si hay excepción, marcamos como 500
                 duration = time.time() - start
                 REQUEST_LATENCY.labels(endpoint=endpoint).observe(duration)
                 REQUEST_COUNT.labels(
@@ -73,27 +69,16 @@ def track_metrics(endpoint: str):
             finally:
                 # Si no hubo excepción, se mide aquí
                 duration = time.time() - start
-                # OJO: en caso de excepción ya medimos arriba, pero
-                # este finally igual corre; por simplicidad suponemos
-                # que el tiempo es válido para el caso normal.
-                # Para evitar doble registro cuando hay excepción,
-                # podríamos mejorar la lógica, pero así es suficiente
-                # para este proyecto educativo.
                 if request:
                     # Solo registramos si hay request activo
                     REQUEST_LATENCY.labels(endpoint=endpoint).observe(duration)
-                    # El contador se aumenta arriba para excepciones y abajo para éxito
-                    # pero aquí ya no tenemos el status_code fácilmente,
-                    # por eso lo aumentamos únicamente en el bloque try.
                     pass
 
         return wrapper
     return decorator
 
 
-# ==========================
 #        RUTAS API
-# ==========================
 
 @app.route("/")
 @track_metrics(endpoint="/")
@@ -140,9 +125,8 @@ def fail():
     return jsonify({"error": "Fallo intencional para pruebas de alerta"}), 500
 
 
-# ==========================
+
 #     ENDPOINT MÉTRICAS
-# ==========================
 
 @app.route("/metrics")
 def metrics():
@@ -156,3 +140,4 @@ def metrics():
 if __name__ == "__main__":
     # Modo desarrollo local (no para producción)
     app.run(host="0.0.0.0", port=8000, debug=True)
+
